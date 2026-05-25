@@ -1,6 +1,6 @@
 # losdeberes — instrucciones para Claude
 
-Este proyecto es un gestor de tareas basado en archivos Markdown. Cada tarea vive en su propia carpeta dentro de `tareas/{proyecto}/{ID}-{slug}/`.
+Este proyecto es un gestor de tareas basado en archivos Markdown. Cada tarea vive en su propia carpeta dentro de `datos/tareas/{proyecto}/{ID}-{slug}/`.
 
 ---
 
@@ -8,13 +8,15 @@ Este proyecto es un gestor de tareas basado en archivos Markdown. Cada tarea viv
 
 ```
 losdeberes/
-├── tareas/
-│   ├── general/               ← tareas sin proyecto específico
-│   └── {proyecto}/            ← una carpeta por proyecto
-│       └── {ID}-{slug}/       ← una carpeta por tarea
-│           ├── tarea.md       ← descripción principal (obligatorio)
-│           └── *.md / *.png   ← archivos adicionales opcionales
-└── completadas/               ← misma estructura; tareas terminadas
+├── datos/                     ← submodulo git privado (losdeberes-tareas)
+│   ├── tareas/
+│   │   ├── general/           ← tareas sin proyecto específico
+│   │   └── {proyecto}/        ← una carpeta por proyecto
+│   │       └── {ID}-{slug}/   ← una carpeta por tarea
+│   │           ├── tarea.md   ← descripción principal (obligatorio)
+│   │           └── *.md / *.png
+│   └── completadas/           ← misma estructura; tareas terminadas
+└── scripts/ / CLAUDE.md / ...  ← herramienta pública
 ```
 
 ---
@@ -66,7 +68,7 @@ El ID se compone de un prefijo de 3 letras derivado del nombre del proyecto + n�
 | alicates | ALC |
 | (nuevo proyecto) | 3 primeras letras en mayúsculas |
 
-Para calcular el siguiente número: revisar todas las carpetas en `tareas/{proyecto}/` **y** `completadas/{proyecto}/` y usar el número más alto + 1.
+Para calcular el siguiente número: revisar todas las carpetas en `datos/tareas/{proyecto}/` **y** `datos/completadas/{proyecto}/` y usar el número más alto + 1.
 
 ---
 
@@ -77,9 +79,9 @@ Para calcular el siguiente número: revisar todas las carpetas en `tareas/{proye
 1. Determinar el proyecto. Si no se indica → `general`.
 2. Calcular el siguiente ID (ver regla de prefijo + secuencial).
 3. Crear el slug: título en minúsculas, palabras separadas por guiones, sin acentos ni caracteres especiales.
-4. Crear la carpeta: `tareas/{proyecto}/{ID}-{slug}/`
+4. Crear la carpeta: `datos/tareas/{proyecto}/{ID}-{slug}/`
 5. Crear `tarea.md` con el frontmatter completo y una descripción clara.
-6. Confirmar: *"Tarea {ID} creada: tareas/{proyecto}/{ID}-{slug}/"*
+6. Confirmar: *"Tarea {ID} creada: datos/tareas/{proyecto}/{ID}-{slug}/"*
 
 ---
 
@@ -87,7 +89,7 @@ Para calcular el siguiente número: revisar todas las carpetas en `tareas/{proye
 
 > *"añade información a la tarea BDR-001"* / *"actualiza BDR-001 con..."*
 
-1. Localizar la tarea por ID buscando en `tareas/` y `completadas/`.
+1. Localizar la tarea por ID buscando en `datos/tareas/` y `datos/completadas/`.
 2. Editar el cuerpo del `tarea.md` (añadir sección, corregir criterios, etc.).
 3. Si cambia la importancia o el estado, actualizar el frontmatter.
 4. Confirmar qué se ha cambiado.
@@ -98,8 +100,8 @@ Para calcular el siguiente número: revisar todas las carpetas en `tareas/{proye
 
 > *"marca como completada la tarea BDR-001"*
 
-1. Localizar la carpeta de la tarea en `tareas/{proyecto}/{ID}-{slug}/`.
-2. Mover la carpeta entera a `completadas/{proyecto}/{ID}-{slug}/`.
+1. Localizar la carpeta de la tarea en `datos/tareas/{proyecto}/{ID}-{slug}/`.
+2. Mover la carpeta entera a `datos/completadas/{proyecto}/{ID}-{slug}/`.
 3. Actualizar `estado: completada` y añadir `fecha-completada: YYYY-MM-DD` en el frontmatter.
 4. Confirmar el movimiento.
 
@@ -119,7 +121,7 @@ Lista agrupada por proyecto, ordenada por importancia.
 
 ## Listar con Claude
 
-Cuando el usuario pide listar tareas o proyectos, leer todas las carpetas de `tareas/` y mostrar una lista clara en texto. Formatos de respuesta:
+Cuando el usuario pide listar tareas o proyectos, leer todas las carpetas de `datos/tareas/` y mostrar una lista clara en texto. Formatos de respuesta:
 
 ### Lista completa
 > *"lista las tareas pendientes"* / *"¿qué deberes hay?"*
@@ -147,9 +149,9 @@ Filtrar por el campo `importancia` del frontmatter.
 ### Proyectos activos
 > *"¿qué proyectos tienen tareas?"* / *"lista los proyectos"*
 
-Listar los nombres de carpeta dentro de `tareas/` que contengan al menos una tarea, con el número de tareas de cada uno.
+Listar los nombres de carpeta dentro de `datos/tareas/` que contengan al menos una tarea, con el número de tareas de cada uno.
 
 ### Tareas completadas
 > *"¿qué se ha completado?"* / *"historial de Bedrock"*
 
-Leer las carpetas dentro de `completadas/` y mostrar de la misma manera.
+Leer las carpetas dentro de `datos/completadas/` y mostrar de la misma manera.

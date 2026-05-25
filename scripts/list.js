@@ -3,7 +3,7 @@ import { join, dirname, relative } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const TAREAS_DIR = join(__dirname, '..', 'tareas')
+const TAREAS_DIR = join(__dirname, '..', 'datos', 'tareas')
 
 const IMPORTANCIA_ORDER = { critica: 0, alta: 1, media: 2, baja: 3 }
 const IMPORTANCIA_LABEL = { critica: '🔴 crítica', alta: '🟠 alta', media: '🟡 media', baja: '🟢 baja' }
