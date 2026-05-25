@@ -1,0 +1,3 @@
+[submodule "tareas"]
+	path = tareas
+	url = https://github.com/Katamo/losdeberes-tareas.git
