@@ -72,6 +72,35 @@ Copy-Item "claude-commands\deberes.md" "$env:USERPROFILE\.claude\commands\debere
 /deberes ¿qué se ha completado?
 ```
 
+### Opción C — comando /tarea (para arrancar trabajo)
+
+Carga una tarea concreta y analiza cómo implementarla en el proyecto que tienes abierto en ese momento.
+
+**1. Copia el archivo de comando:**
+
+```bash
+# macOS / Linux
+cp claude-commands/tarea.md ~/.claude/commands/tarea.md
+
+# Windows (PowerShell)
+Copy-Item "claude-commands\tarea.md" "$env:USERPROFILE\.claude\commands\tarea.md"
+```
+
+**2. Edita `~/.claude/commands/tarea.md`** y ajusta la ruta al proyecto en las dos primeras líneas:
+
+```
+...ubicado en `/ruta/a/tu/losdeberes`.
+```
+
+**Uso:** abre cualquier proyecto en Claude Code y escribe:
+
+```
+/tarea MIX-001
+/tarea BDR-001
+```
+
+Claude leerá la tarea, mostrará un resumen y analizará cómo abordar cada criterio en el contexto del proyecto actual.
+
 ---
 
 ## Ver tareas en terminal
