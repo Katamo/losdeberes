@@ -1,0 +1,9 @@
+{
+  "name": "losdeberes",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/list.js",
+    "list":  "node scripts/list.js"
+  }
+}
