@@ -8,7 +8,7 @@ Este proyecto es un gestor de tareas basado en archivos Markdown. Cada tarea viv
 
 ```
 losdeberes/
-├── datos/                     ← submodulo git privado (losdeberes-tareas)
+├── datos/                     ← ignorado en git; repo privado independiente
 │   ├── tareas/
 │   │   ├── general/           ← tareas sin proyecto específico
 │   │   └── {proyecto}/        ← una carpeta por proyecto

@@ -16,9 +16,9 @@ Crea la carpeta donde vivirán tus tareas:
 mkdir -p datos/tareas datos/completadas
 ```
 
-> Si quieres tener tus tareas en un repo privado de Git, puedes usar un submodulo:
+> Si quieres tener tus tareas en un repo privado de Git, clona ese repo en `datos/`:
 > ```bash
-> git submodule add https://github.com/tu-usuario/tu-repo-privado.git datos
+> git clone https://github.com/tu-usuario/tu-repo-privado.git datos
 > ```
 
 ---
