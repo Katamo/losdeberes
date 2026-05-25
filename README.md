@@ -2,13 +2,24 @@
 
 Gestor de tareas pendientes basado en archivos Markdown, organizado por proyectos. Diseñado para usarse con [Claude Code](https://claude.ai/code).
 
-## Ver tareas en terminal
+## Instalación
 
 ```bash
-npm start
+git clone https://github.com/Katamo/losdeberes.git
+cd losdeberes
+npm install
 ```
 
-Lista todas las tareas pendientes agrupadas por proyecto y ordenadas por importancia.
+Crea la carpeta donde vivirán tus tareas:
+
+```bash
+mkdir -p datos/tareas datos/completadas
+```
+
+> Si quieres tener tus tareas en un repo privado de Git, puedes usar un submodulo:
+> ```bash
+> git submodule add https://github.com/tu-usuario/tu-repo-privado.git datos
+> ```
 
 ---
 
@@ -21,7 +32,7 @@ Abre `losdeberes` en Claude Code y usa lenguaje natural directamente:
 ```
 añade una tarea al proyecto Bedrock: revisar el sistema de colores, importancia alta
 marca como completada la tarea BDR-001
-¿qué tareas hay pendientes del proyecto mixes.0057?
+¿qué tareas hay pendientes del proyecto Bedrock?
 lista los proyectos activos
 ```
 
@@ -29,11 +40,9 @@ Claude sigue las instrucciones de `CLAUDE.md` para mantener la estructura y el f
 
 ### Opción B — comando /deberes (recomendado)
 
-Instala el slash command global para poder gestionar tareas desde **cualquier proyecto** abierto en Claude Code, sin necesidad de cambiar de carpeta.
+Instala el slash command global para gestionar tareas desde **cualquier proyecto** abierto en Claude Code, sin cambiar de carpeta.
 
-#### Instalación
-
-1. Copia el archivo de comando a tu carpeta global de Claude Code:
+**1. Copia el archivo de comando:**
 
 ```bash
 # macOS / Linux
@@ -45,15 +54,13 @@ New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\commands"
 Copy-Item "claude-commands\deberes.md" "$env:USERPROFILE\.claude\commands\deberes.md"
 ```
 
-2. Edita `~/.claude/commands/deberes.md` y ajusta la ruta al proyecto en la primera línea:
+**2. Edita `~/.claude/commands/deberes.md`** y ajusta la ruta al proyecto en la primera línea:
 
 ```
 ...ubicado en `/ruta/a/tu/losdeberes`.
 ```
 
-#### Uso
-
-Una vez instalado, escribe `/deberes` seguido de tu instrucción desde cualquier proyecto:
+**Uso:**
 
 ```
 /deberes añade una tarea al proyecto Bedrock: revisar tipografías, importancia alta
@@ -67,17 +74,28 @@ Una vez instalado, escribe `/deberes` seguido de tu instrucción desde cualquier
 
 ---
 
+## Ver tareas en terminal
+
+```bash
+npm start
+```
+
+Lista todas las tareas pendientes agrupadas por proyecto y ordenadas por importancia.
+
+---
+
 ## Estructura de carpetas
 
 ```
 losdeberes/
-├── tareas/
-│   ├── general/               ← tareas sin proyecto específico
-│   └── {proyecto}/
-│       └── {ID}-{slug}/
-│           ├── tarea.md       ← descripción principal
-│           └── ...            ← archivos adicionales opcionales
-├── completadas/               ← misma estructura, tareas terminadas
+├── datos/
+│   ├── tareas/
+│   │   ├── general/           ← tareas sin proyecto específico
+│   │   └── {proyecto}/
+│   │       └── {ID}-{slug}/
+│   │           ├── tarea.md   ← descripción principal
+│   │           └── ...        ← archivos adicionales opcionales
+│   └── completadas/           ← misma estructura, tareas terminadas
 ├── claude-commands/
 │   └── deberes.md             ← plantilla del slash command
 ├── scripts/
@@ -113,6 +131,8 @@ estado: pendiente
 
 ## Prefijos de proyecto
 
+El ID de cada tarea se compone de un prefijo de 3 letras + número secuencial (`BDR-001`, `GEN-002`…). Para nuevos proyectos usa las 3 primeras letras en mayúsculas.
+
 | Proyecto | Prefijo |
 |---|---|
 | General | GEN |
@@ -121,5 +141,3 @@ estado: pendiente
 | blog.omata | BLG |
 | plantillas | PLT |
 | alicates | ALC |
-
-Para nuevos proyectos: 3 primeras letras en mayúsculas.
