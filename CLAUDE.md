@@ -60,12 +60,9 @@ El ID se compone de un prefijo de 3 letras derivado del nombre del proyecto + n�
 
 | Proyecto | Prefijo |
 |---|---|
-| Bedrock | BDR |
 | General | GEN |
-| mixes.0057 | MIX |
-| blog.omata | BLG |
-| plantillas | PLT |
-| alicates | ALC |
+| MiProyecto | MIP |
+| OtroProyecto | OTR |
 | (nuevo proyecto) | 3 primeras letras en mayúsculas |
 
 Para calcular el siguiente número: revisar todas las carpetas en `datos/tareas/{proyecto}/` **y** `datos/completadas/{proyecto}/` y usar el número más alto + 1.

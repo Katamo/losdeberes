@@ -131,13 +131,12 @@ estado: pendiente
 
 ## Prefijos de proyecto
 
-El ID de cada tarea se compone de un prefijo de 3 letras + número secuencial (`BDR-001`, `GEN-002`…). Para nuevos proyectos usa las 3 primeras letras en mayúsculas.
+El ID de cada tarea se compone de un prefijo de 3 letras + número secuencial (`WEB-001`, `GEN-002`…). Para nuevos proyectos usa las 3 primeras letras en mayúsculas.
 
 | Proyecto | Prefijo |
 |---|---|
 | General | GEN |
-| Bedrock | BDR |
-| mixes.0057 | MIX |
-| blog.omata | BLG |
-| plantillas | PLT |
-| alicates | ALC |
+| MiProyecto | MIP |
+| OtroProyecto | OTR |
+
+Personaliza esta tabla en tu `CLAUDE.md` con tus propios proyectos.
