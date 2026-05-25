@@ -32,16 +32,25 @@ fecha: YYYY-MM-DD
 importancia: alta
 estado: pendiente
 ---
-
-## Descripción
-
-Texto libre explicando qué hay que hacer y por qué.
-
-## Criterios / pasos
-
-- Paso o criterio 1
-- Paso o criterio 2
 ```
+
+Las tareas de rutina añaden el campo `proyectos`:
+
+```markdown
+---
+id: RUT-001
+titulo: Título de la tarea transversal
+proyecto: rutina
+proyectos: [bedrock, mixes.0057, blog.omata]
+fecha: YYYY-MM-DD
+importancia: alta
+estado: pendiente
+---
+```
+
+El cuerpo (`## Descripción`, `## Criterios / pasos`) sigue el mismo formato que el resto de tareas.
+
+Cuando se completa la tarea en un proyecto, se elimina ese proyecto de la lista `proyectos`. Cuando la lista queda vacía, la tarea se mueve a `completadas/`.
 
 ### Valores de importancia
 
@@ -79,6 +88,29 @@ Para calcular el siguiente número: revisar todas las carpetas en `datos/tareas/
 4. Crear la carpeta: `datos/tareas/{proyecto}/{ID}-{slug}/`
 5. Crear `tarea.md` con el frontmatter completo y una descripción clara.
 6. Confirmar: *"Tarea {ID} creada: datos/tareas/{proyecto}/{ID}-{slug}/"*
+
+---
+
+## Cómo añadir una tarea de rutina (transversal)
+
+> *"añade una rutina: aplicar actualización de Bedrock en todos los proyectos"*
+
+Las tareas de rutina son tareas que deben aplicarse en varios proyectos. Viven en el proyecto especial `rutina` (prefijo `RUT`) y aparecen al inicio de la lista.
+
+1. Proyecto = `rutina`, prefijo = `RUT`.
+2. Calcular siguiente ID revisando `datos/tareas/rutina/` y `datos/completadas/rutina/`.
+3. Crear la carpeta: `datos/tareas/rutina/{ID}-{slug}/`
+4. Crear `tarea.md` con el campo `proyectos: [proyecto1, proyecto2, ...]` listando todos los proyectos donde aplica.
+5. Confirmar: *"Rutina {ID} creada: datos/tareas/rutina/{ID}-{slug}/"*
+
+## Cómo marcar una rutina como aplicada en un proyecto
+
+> *"he aplicado RUT-001 en bedrock"*
+
+1. Localizar la tarea en `datos/tareas/rutina/`.
+2. Eliminar el proyecto de la lista `proyectos:` en el frontmatter.
+3. Si la lista `proyectos:` queda vacía → mover la carpeta a `datos/completadas/rutina/` y actualizar `estado: completada`.
+4. Confirmar qué proyecto se eliminó y si la tarea quedó completada.
 
 ---
 
