@@ -1,2 +1,3 @@
-# Las tareas están en datos/ (submodulo privado)
+# Las tareas están en datos/ (repo privado independiente)
+datos/
 .claude/settings.local.json
