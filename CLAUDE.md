@@ -114,3 +114,42 @@ node scripts/list.js
 ```
 
 Lista agrupada por proyecto, ordenada por importancia.
+
+---
+
+## Listar con Claude
+
+Cuando el usuario pide listar tareas o proyectos, leer todas las carpetas de `tareas/` y mostrar una lista clara en texto. Formatos de respuesta:
+
+### Lista completa
+> *"lista las tareas pendientes"* / *"¿qué deberes hay?"*
+
+Mostrar todas las tareas agrupadas por proyecto con formato:
+
+```
+BEDROCK
+  [BDR-001] Corregir sistema de importación de tipografías — 🟠 alta — 2026-05-25
+
+GENERAL
+  [GEN-001] Nombre de la tarea — 🟡 media — 2026-05-20
+```
+
+### Por proyecto
+> *"tareas de Bedrock"* / *"¿qué hay pendiente en mixes.0057?"*
+
+Filtrar y mostrar solo las del proyecto indicado.
+
+### Por importancia
+> *"tareas críticas"* / *"tareas de importancia alta"*
+
+Filtrar por el campo `importancia` del frontmatter.
+
+### Proyectos activos
+> *"¿qué proyectos tienen tareas?"* / *"lista los proyectos"*
+
+Listar los nombres de carpeta dentro de `tareas/` que contengan al menos una tarea, con el número de tareas de cada uno.
+
+### Tareas completadas
+> *"¿qué se ha completado?"* / *"historial de Bedrock"*
+
+Leer las carpetas dentro de `completadas/` y mostrar de la misma manera.
