@@ -2,7 +2,11 @@
 
 Gestor de tareas pendientes basado en archivos Markdown, organizado por proyectos. Diseñado para usarse con [Claude Code](https://claude.ai/code).
 
+---
+
 ## Instalación
+
+**1. Clona el repositorio** en una carpeta de tu máquina:
 
 ```bash
 git clone https://github.com/Katamo/losdeberes.git
@@ -10,24 +14,50 @@ cd losdeberes
 npm install
 ```
 
-Crea la carpeta donde vivirán tus tareas:
+**2. Crea la carpeta de datos** donde vivirán tus tareas:
 
 ```bash
 mkdir -p datos/tareas datos/completadas
 ```
 
-> Si quieres tener tus tareas en un repo privado de Git, clona ese repo en `datos/`:
+> Si quieres guardar tus tareas en un repo privado de Git, clónalo en `datos/` en lugar del paso anterior:
 > ```bash
 > git clone https://github.com/tu-usuario/tu-repo-privado.git datos
 > ```
+
+**3. Anota la ruta absoluta** a la carpeta `losdeberes` en tu máquina. La necesitarás en el paso siguiente:
+
+```
+# Ejemplos:
+/Users/tunombre/proyectos/losdeberes      ← macOS / Linux
+C:\Users\tunombre\proyectos\losdeberes    ← Windows
+```
+
+**4. Instala los slash commands** copiando las plantillas a tu carpeta global de Claude Code y sustituyendo `/ruta/a/losdeberes` por la ruta del paso anterior:
+
+```bash
+# macOS / Linux
+mkdir -p ~/.claude/commands
+cp claude-commands/deberes.md ~/.claude/commands/deberes.md
+cp claude-commands/tarea.md ~/.claude/commands/tarea.md
+```
+
+```powershell
+# Windows (PowerShell)
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\commands"
+Copy-Item "claude-commands\deberes.md" "$env:USERPROFILE\.claude\commands\deberes.md"
+Copy-Item "claude-commands\tarea.md"   "$env:USERPROFILE\.claude\commands\tarea.md"
+```
+
+Abre los dos archivos copiados y reemplaza `/ruta/a/losdeberes` por tu ruta real. Esto es imprescindible — sin este cambio los comandos no funcionarán.
 
 ---
 
 ## Uso con Claude Code
 
-### Opción A — desde el propio proyecto
+### Desde el propio proyecto
 
-Abre `losdeberes` en Claude Code y usa lenguaje natural directamente:
+Abre la carpeta `losdeberes` en Claude Code y usa lenguaje natural directamente:
 
 ```
 añade una tarea al proyecto Bedrock: revisar el sistema de colores, importancia alta
@@ -36,31 +66,9 @@ marca como completada la tarea BDR-001
 lista los proyectos activos
 ```
 
-Claude sigue las instrucciones de `CLAUDE.md` para mantener la estructura y el formato.
+### Comando /deberes (recomendado)
 
-### Opción B — comando /deberes (recomendado)
-
-Instala el slash command global para gestionar tareas desde **cualquier proyecto** abierto en Claude Code, sin cambiar de carpeta.
-
-**1. Copia el archivo de comando:**
-
-```bash
-# macOS / Linux
-mkdir -p ~/.claude/commands
-cp claude-commands/deberes.md ~/.claude/commands/deberes.md
-
-# Windows (PowerShell)
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\commands"
-Copy-Item "claude-commands\deberes.md" "$env:USERPROFILE\.claude\commands\deberes.md"
-```
-
-**2. Edita `~/.claude/commands/deberes.md`** y ajusta la ruta al proyecto en la primera línea:
-
-```
-...ubicado en `/ruta/a/tu/losdeberes`.
-```
-
-**Uso:**
+Gestiona tareas desde **cualquier proyecto** abierto en Claude Code, sin cambiar de carpeta.
 
 ```
 /deberes añade una tarea al proyecto Bedrock: revisar tipografías, importancia alta
@@ -72,31 +80,13 @@ Copy-Item "claude-commands\deberes.md" "$env:USERPROFILE\.claude\commands\debere
 /deberes ¿qué se ha completado?
 ```
 
-### Opción C — comando /tarea (para arrancar trabajo)
+### Comando /tarea
 
 Carga una tarea concreta y analiza cómo implementarla en el proyecto que tienes abierto en ese momento.
 
-**1. Copia el archivo de comando:**
-
-```bash
-# macOS / Linux
-cp claude-commands/tarea.md ~/.claude/commands/tarea.md
-
-# Windows (PowerShell)
-Copy-Item "claude-commands\tarea.md" "$env:USERPROFILE\.claude\commands\tarea.md"
 ```
-
-**2. Edita `~/.claude/commands/tarea.md`** y ajusta la ruta al proyecto en las dos primeras líneas:
-
-```
-...ubicado en `/ruta/a/tu/losdeberes`.
-```
-
-**Uso:** abre cualquier proyecto en Claude Code y escribe:
-
-```
-/tarea MIX-001
 /tarea BDR-001
+/tarea MIX-001
 ```
 
 Claude leerá la tarea, mostrará un resumen y analizará cómo abordar cada criterio en el contexto del proyecto actual.
@@ -109,7 +99,7 @@ Claude leerá la tarea, mostrará un resumen y analizará cómo abordar cada cri
 npm start
 ```
 
-Lista todas las tareas pendientes agrupadas por proyecto y ordenadas por importancia.
+Lista todas las tareas pendientes agrupadas por proyecto y ordenadas por importancia. Las tareas de rutina (transversales a varios proyectos) aparecen primero.
 
 ---
 
@@ -117,21 +107,25 @@ Lista todas las tareas pendientes agrupadas por proyecto y ordenadas por importa
 
 ```
 losdeberes/
-├── datos/
+├── datos/                         ← no incluido en git; gestiona tú este repo
 │   ├── tareas/
-│   │   ├── general/           ← tareas sin proyecto específico
+│   │   ├── general/               ← tareas sin proyecto específico
+│   │   ├── rutina/                ← tareas transversales a varios proyectos
 │   │   └── {proyecto}/
 │   │       └── {ID}-{slug}/
-│   │           ├── tarea.md   ← descripción principal
-│   │           └── ...        ← archivos adicionales opcionales
-│   └── completadas/           ← misma estructura, tareas terminadas
+│   │           ├── tarea.md       ← descripción principal
+│   │           └── ...
+│   └── completadas/               ← misma estructura, tareas terminadas
 ├── claude-commands/
-│   └── deberes.md             ← plantilla del slash command
+│   ├── deberes.md                 ← plantilla del comando /deberes
+│   └── tarea.md                  ← plantilla del comando /tarea
 ├── scripts/
-│   └── list.js                ← script de listado en terminal
-├── CLAUDE.md                  ← instrucciones para Claude
+│   └── list.js                    ← script de listado en terminal
+├── CLAUDE.md                      ← instrucciones para Claude
 └── README.md
 ```
+
+---
 
 ## Formato de una tarea
 
@@ -147,6 +141,10 @@ estado: pendiente
 
 ## Descripción
 ...
+
+## Criterios / pasos
+- Paso 1
+- Paso 2
 ```
 
 | importancia | cuándo |
@@ -156,11 +154,18 @@ estado: pendiente
 | `media` | relevante pero no urgente |
 | `baja` | nice-to-have |
 
+### Campos opcionales
+
+| Campo | Ejemplo | Para qué sirve |
+|---|---|---|
+| `desbloquea` | `MIG-004` | Al completar esta tarea, avisa de que MIG-004 está lista para empezar |
+| `proyectos` | `[bedrock, mixes]` | Solo en tareas de rutina: proyectos donde aplica |
+
 ---
 
 ## Prefijos de proyecto
 
-El ID de cada tarea se compone de un prefijo de 3 letras + número secuencial (`WEB-001`, `GEN-002`…). Para nuevos proyectos usa las 3 primeras letras en mayúsculas.
+El ID de cada tarea es un prefijo de 3 letras + número secuencial (`BDR-001`, `GEN-002`…). Para nuevos proyectos usa las 3 primeras letras en mayúsculas.
 
 | Proyecto | Prefijo |
 |---|---|
