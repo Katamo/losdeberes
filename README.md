@@ -154,12 +154,38 @@ estado: pendiente
 | `media` | relevante pero no urgente |
 | `baja` | nice-to-have |
 
-### Campos opcionales
+### Tareas de rutina
 
-| Campo | Ejemplo | Para qué sirve |
-|---|---|---|
-| `desbloquea` | `MIG-004` | Al completar esta tarea, avisa de que MIG-004 está lista para empezar |
-| `proyectos` | `[bedrock, mixes]` | Solo en tareas de rutina: proyectos donde aplica |
+Las tareas de rutina son tareas transversales que deben aplicarse en varios proyectos. Viven en `datos/tareas/rutina/` y aparecen al inicio del listado, antes del resto.
+
+Se identifican porque tienen el campo `proyectos` con la lista de proyectos donde aún está pendiente. Cuando la completas en un proyecto, eliminas ese proyecto de la lista. Cuando la lista queda vacía, la tarea se mueve a completadas.
+
+```
+/deberes añade una rutina: configurar prettier en bedrock, mixes.0057 y plantillas
+/deberes he aplicado RUT-001 en bedrock
+```
+
+### Tareas vinculadas
+
+El campo `desbloquea` permite vincular dos tareas de proyectos distintos cuando una depende de que la otra esté terminada.
+
+```markdown
+---
+id: PLT-003
+titulo: Componente tabla ordenable
+proyecto: plantillas
+desbloquea: MIG-007
+---
+```
+
+Cuando completas PLT-003, Claude te avisa: *"Esta tarea desbloquea MIG-007"* y te pregunta si quieres empezar con ella ahora. Puedes crear la tarea destino desde el principio o en el momento de completar la origen.
+
+```
+/deberes añade tarea a plantillas: componente tabla ordenable,
+         que al terminar desbloquea una tarea en migas para integrarlo
+/deberes completa PLT-003
+→ Esta tarea desbloquea MIG-007 (Integrar tabla ordenable de plantillas). ¿La empezamos?
+```
 
 ---
 
