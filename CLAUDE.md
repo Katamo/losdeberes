@@ -31,8 +31,11 @@ proyecto: NombreProyecto
 fecha: YYYY-MM-DD
 importancia: alta
 estado: pendiente
+desbloquea: MIG-004
 ---
 ```
+
+El campo `desbloquea` es opcional. Indica que al completar esta tarea, la tarea referenciada queda desbloqueada. Puede ser un ID único (`MIG-004`) o una lista (`[MIG-004, BLG-003]`).
 
 Las tareas de rutina añaden el campo `proyectos`:
 
@@ -132,7 +135,8 @@ Las tareas de rutina son tareas que deben aplicarse en varios proyectos. Viven e
 1. Localizar la carpeta de la tarea en `datos/tareas/{proyecto}/{ID}-{slug}/`.
 2. Mover la carpeta entera a `datos/completadas/{proyecto}/{ID}-{slug}/`.
 3. Actualizar `estado: completada` y añadir `fecha-completada: YYYY-MM-DD` en el frontmatter.
-4. Confirmar el movimiento.
+4. Si la tarea tiene el campo `desbloquea`, avisar al usuario: *"Esta tarea desbloquea {ID}: {titulo}"* y preguntar si quiere crear ahora la tarea en el proyecto destino.
+5. Confirmar el movimiento.
 
 ---
 
@@ -184,3 +188,8 @@ Listar los nombres de carpeta dentro de `datos/tareas/` que contengan al menos u
 > *"¿qué se ha completado?"* / *"historial de Bedrock"*
 
 Leer las carpetas dentro de `datos/completadas/` y mostrar de la misma manera.
+
+### Dependencias entre tareas
+> *"qué desbloquea PLT-002"* / *"qué tareas tienen dependencias"*
+
+Buscar en todas las tareas el campo `desbloquea` y mostrar las relaciones: qué tarea desbloquea a cuál.
