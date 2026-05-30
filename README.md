@@ -51,6 +51,16 @@ Copy-Item "claude-commands\tarea.md"   "$env:USERPROFILE\.claude\commands\tarea.
 
 Abre los dos archivos copiados y reemplaza `/ruta/a/losdeberes` por tu ruta real. Esto es imprescindible — sin este cambio los comandos no funcionarán.
 
+**5. Crea el archivo de mapeo de proyectos** `datos/proyectos.yml` para que `/changelog` sepa dónde encontrar cada proyecto en disco:
+
+```yaml
+proyectos:
+  mi-proyecto:   /ruta/a/mi-proyecto
+  otro-proyecto: /ruta/a/otro-proyecto
+```
+
+Añade una línea por cada proyecto que tengas en losdeberes. Si el nombre de carpeta en disco coincide con el nombre en losdeberes, simplemente apunta a esa ruta. Si difieren (como `bedrock` → `css_bedrock`), aquí se resuelve la diferencia.
+
 ---
 
 ## Uso con Claude Code
@@ -84,6 +94,19 @@ Gestiona tareas desde **cualquier proyecto** abierto en Claude Code, sin cambiar
 
 Carga una tarea concreta y analiza cómo implementarla en el proyecto que tienes abierto en ese momento.
 
+### Comando /changelog
+
+Genera o actualiza el `CHANGELOG.md` de un proyecto a partir de sus tareas completadas, con versionado semver.
+
+```
+/changelog mixes.0057
+/changelog bedrock
+```
+
+El comando lee las tareas completadas del proyecto, detecta cuáles son nuevas desde la última entrada del changelog, sugiere la versión semver según la importancia más alta (crítica → major, alta → minor, media/baja → patch) y pide confirmación antes de escribir.
+
+Requiere el archivo `datos/proyectos.yml` con el mapeo entre nombre de proyecto y ruta de carpeta en disco. Créalo al instalar (ver más abajo).
+
 ```
 /tarea BDR-001
 /tarea MIX-001
@@ -108,6 +131,7 @@ Lista todas las tareas pendientes agrupadas por proyecto y ordenadas por importa
 ```
 losdeberes/
 ├── datos/                         ← no incluido en git; gestiona tú este repo
+│   ├── proyectos.yml              ← mapeo nombre → ruta de cada proyecto
 │   ├── tareas/
 │   │   ├── general/               ← tareas sin proyecto específico
 │   │   ├── rutina/                ← tareas transversales a varios proyectos
@@ -118,7 +142,8 @@ losdeberes/
 │   └── completadas/               ← misma estructura, tareas terminadas
 ├── claude-commands/
 │   ├── deberes.md                 ← plantilla del comando /deberes
-│   └── tarea.md                  ← plantilla del comando /tarea
+│   ├── tarea.md                   ← plantilla del comando /tarea
+│   └── changelog.md               ← plantilla del comando /changelog
 ├── scripts/
 │   └── list.js                    ← script de listado en terminal
 ├── CLAUDE.md                      ← instrucciones para Claude

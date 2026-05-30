@@ -140,6 +140,20 @@ Las tareas de rutina son tareas que deben aplicarse en varios proyectos. Viven e
 
 ---
 
+## Changelog
+
+El archivo `datos/proyectos.yml` mapea cada nombre de proyecto al directorio real en disco. Es necesario para que `/changelog` encuentre dónde escribir el `CHANGELOG.md` de cada proyecto.
+
+```yaml
+proyectos:
+  mixes.0057: /ruta/a/mixes.0057
+  bedrock:    /ruta/a/css_bedrock
+```
+
+Actualiza este archivo cuando añadas nuevos proyectos o muevas carpetas.
+
+---
+
 ## Ver las tareas pendientes
 
 ```bash
